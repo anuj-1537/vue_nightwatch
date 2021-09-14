@@ -49,7 +49,7 @@
           <li v-for="(err,index) in contactErr" :key="index">{{err}}</li>
       </ul>
     </p>
-    <button type="submit" @click.prevent="submitForm();$emit('studentInfo',studentList)">Submit</button>
+    <button type="submit" @click.prevent="submitForm()">Submit</button>
   </div>
 </template>
 
@@ -73,13 +73,10 @@ export default {
       contactErr: []
     };
   },
-  props:{
-    selectedStudent:Object
-  },
+  
   methods: {
     submitForm() {
-      // console.log("submitted form data ", this.$data);
-      // this.studentObj = Object.assign({}, this.$data);
+      
       this.studentList = [];
       this.studentObj = {
         name: this.name,
@@ -91,7 +88,22 @@ export default {
       };
       this.validateForm();
       if (this.formValidate) {
-        this.studentList.push(this.studentObj);
+        
+        if (
+				typeof this.studentObj !== "undefined" &&
+				this.$store.getters.getStudentData.indexOf(this.studentObj) == -1
+			){
+        if (this.$store.getters.getSelectedIndex != -1) {
+          
+          this.$store.commit('editStudentData',this.studentObj);
+          this.$store.commit('editSelectedIndex');
+        }else{
+              this.$store.commit('postStudentData',this.studentObj);
+        }
+
+          
+      } 
+        
         this.initializeData();
       }
     },
@@ -161,22 +173,7 @@ export default {
       }
     },
     validateForm() {
-      // if (
-      //   this.name == "" ||
-      //   this.age == 0 ||
-      //   this.gender == "" ||
-      //   this.qualification == "" ||
-      //   this.contact == 0
-      // ) {
-      //   console.log("form data is wrong");
-
-      //   alert("input data is empty");
-      // } else if (isNaN(this.age) || isNaN(this.contact)) {
-      //   alert("please enter number for age and contact");
-      // } else {
-      //   this.formValidate = true;
-      //   console.log("form is validated");
-      // }
+      
       this.genderErr=[];
       this.contactErr = [];
       this.qualificationErr = [];
@@ -218,7 +215,9 @@ export default {
       }
       return 0;
     },
-    
+    selectedStudent() {
+      return this.$store.getters.getStudentData[this.$store.getters.getSelectedIndex]
+    }
   },
   watch:{
     selectedStudent(){
