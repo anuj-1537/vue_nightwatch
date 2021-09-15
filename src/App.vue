@@ -1,10 +1,10 @@
 <template>
 	<div id="app">
-		<router-link to="/"
-			><button class="home-btn" @click="chooseTable(false, false)">
+		<router-link to="/">
+			<button class="home-btn" @click="chooseTable(false, false)">
 				Home
-			</button></router-link
-		>
+			</button>
+		</router-link>
 		<router-link to="/school">
 			<button class="form-btn" @click="chooseTable(true, false)">
 				School Form
@@ -13,6 +13,11 @@
 		<router-link to="/student">
 			<button class="form-btn" @click="chooseTable(false, true)">
 				Student Form
+			</button>
+		</router-link>
+		<router-link to="/cardData">
+			<button class="form-btn" @click="chooseTable(false, false)">
+				Credit Card
 			</button>
 		</router-link>
 		<router-view></router-view>
@@ -89,6 +94,6 @@ export default {
 	font-size: 16px;
 	border-radius: 5px;
 	position: relative;
-	right: 450px;
+	right: 400px;
 }
 </style>

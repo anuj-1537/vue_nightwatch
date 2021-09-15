@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-
+import axios from "axios";
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
@@ -45,6 +45,7 @@ export const store = new Vuex.Store({
 		showSchoolTable: false,
 		showStudentTable: false,
 		today: new Date(),
+		cards: [],
 	},
 	mutations: {
 		postStudentData(state, payload) {
@@ -96,6 +97,9 @@ export const store = new Vuex.Store({
 
 			state.selectedSchoolIndex = payload;
 		},
+		SET_ITEMS(state, cards) {
+			state.cards = cards;
+		},
 	},
 	getters: {
 		getStudentData(state) {
@@ -123,6 +127,25 @@ export const store = new Vuex.Store({
 		},
 		getSelectedSchoolIndex(state) {
 			return state.selectedSchoolIndex;
+		},
+		getCards: (state) => {
+			return state.cards;
+		},
+	},
+	actions: {
+		async loadCards({ commit }) {
+			try {
+				let num = Math.floor(Math.random() * 10) + 1;
+				const response = await axios.get(
+					"https://random-data-api.com/api/business_credit_card/random_card?size=" +
+						num,
+				);
+				console.log(response.data);
+				//calling mutations in actions
+				commit("SET_ITEMS", response.data);
+			} catch (error) {
+				console.log(error);
+			}
 		},
 	},
 });
