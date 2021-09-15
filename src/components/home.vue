@@ -1,5 +1,5 @@
 <template>
-	<div id="app">
+	<div id="home">
 		<p>Welcome to School Data Management</p>
 	</div>
 </template>
@@ -7,7 +7,7 @@
 export default {};
 </script>
 <style scoped>
-#app {
+#home {
 	background-color: hsla(9, 100%, 64%, 0.5);
 }
 p {
