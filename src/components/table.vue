@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<div v-if="showStudentForm">
-			<table v-if="showStudentForm">
+		<div v-if="showStudentTable">
+			<table>
 				<tr>
 					<th>SI No.</th>
 					<th>Name</th>
@@ -26,7 +26,7 @@
 				</tr>
 			</table>
 		</div>
-		<div v-if="showSchoolForm">
+		<div v-if="showSchoolTable">
 			<table>
 				<tr>
 					<th>SI No.</th>
@@ -55,7 +55,7 @@
 			<div v-if="studentsEnrolled.length != 0">
 				<hr />
 				<h3>Students enrolled in {{ studentsEnrolled[0].school }}</h3>
-				<table v-if="showSchoolForm">
+				<table v-if="showSchoolTable">
 					<tr>
 						<th>SI No.</th>
 						<th>Name</th>
@@ -100,11 +100,14 @@ export default {
 
 			return this.$store.getters.getStudentData;
 		},
-		showSchoolForm() {
-			return this.$store.getters.getFormStatus[0];
+		showSchoolTable() {
+			console.log("in table.vue show school table");
+
+			return this.$store.getters.getTableStatus[0];
 		},
-		showStudentForm() {
-			return this.$store.getters.getFormStatus[1];
+		showStudentTable() {
+			console.log("in table.vue show student table");
+			return this.$store.getters.getTableStatus[1];
 		},
 		schoolList() {
 			return this.$store.getters.getSchoolData;

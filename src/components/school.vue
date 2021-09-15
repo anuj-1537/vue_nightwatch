@@ -67,10 +67,10 @@ export default {
           this.$store.commit('editSelectedSchoolIndex');
         }else{
             this.$store.commit('postSchoolData',this.schoolObj);
-          this.initializeData();
+          
           console.log("submitted school form");
         }
-          
+         this.initializeData(); 
       }
       
     },

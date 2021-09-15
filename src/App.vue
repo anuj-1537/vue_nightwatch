@@ -1,57 +1,44 @@
 <template>
 	<div id="app">
-		<button class="form-btn" @click="chooseForm(true, false)">
-			School Form
-		</button>
-		<button class="form-btn" @click="chooseForm(false, true)">
-			Student Form
-		</button>
-		<template v-if="showSchoolForm">
-			<School />
-			<hr />
-			<Table />
-		</template>
-		<template v-if="showStudentForm">
-			<Form />
-			<hr />
-			<Table />
-		</template>
+		<router-link to="/"
+			><button class="home-btn" @click="chooseTable(false, false)">
+				Home
+			</button></router-link
+		>
+		<router-link to="/school">
+			<button class="form-btn" @click="chooseTable(true, false)">
+				School Form
+			</button>
+		</router-link>
+		<router-link to="/student">
+			<button class="form-btn" @click="chooseTable(false, true)">
+				Student Form
+			</button>
+		</router-link>
+		<router-view></router-view>
+		<Table />
 	</div>
 </template>
 
 <script>
-import Form from "./components/Form";
 import Table from "./components/table";
-import School from "./components/school";
+
 export default {
-	name: "App",
+	name: "Home",
 	data() {
-		return {
-			// showSchoolForm: false,
-			// showStudentForm: false,
-		};
+		return {};
 	},
 	methods: {
-		// chooseForm(school, student) {
-		// 	if (school) {
-		// 		this.showSchoolForm = true;
-		// 		this.showStudentForm = false;
-		// 	} else if (student) {
-		// 		this.showStudentForm = true;
-		// 		this.showSchoolForm = false;
-		// 	} else {
-		// 		this.showStudentForm = false;
-		// 		this.showSchoolForm = false;
-		// 	}
-		// },
-		chooseForm(school, student) {
-			this.$store.commit("showForm", [school, student]);
+		chooseTable(school, student) {
+			console.log("in chooseTable ", school, student);
+
+			this.$store.commit("showTable", [school, student]);
 		},
 	},
 	components: {
-		Form,
+		// Form,
 		Table,
-		School,
+		// School,
 	},
 	computed: {
 		studentData() {
@@ -89,5 +76,19 @@ export default {
 	font-size: 16px;
 	border-radius: 5px;
 	margin-left: 30px;
+}
+.home-btn {
+	background-color: gray; /* Green */
+	border: none;
+	color: white;
+	padding: 4px 10px;
+	margin-top: 10px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	border-radius: 5px;
+	position: relative;
+	right: 450px;
 }
 </style>

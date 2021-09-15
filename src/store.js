@@ -40,8 +40,8 @@ export const store = new Vuex.Store({
 				Addr: "Patna",
 			},
 		],
-		showSchoolForm: false,
-		showStudentForm: false,
+		showSchoolTable: false,
+		showStudentTable: false,
 	},
 	mutations: {
 		postStudentData(state, payload) {
@@ -66,16 +66,21 @@ export const store = new Vuex.Store({
 		editSchoolData(state, payload) {
 			state.schoolData.splice(state.selectedSchoolIndex, 1, payload);
 		},
-		showForm(state, payload) {
+		showTable(state, payload) {
+			console.log("in showTable");
+
 			if (payload[0]) {
-				state.showSchoolForm = true;
-				state.showStudentForm = false;
+				state.showSchoolTable = true;
+				state.showStudentTable = false;
+				console.log("show school Table");
 			} else if (payload[1]) {
-				state.showStudentForm = true;
-				state.showSchoolForm = false;
+				state.showStudentTable = true;
+				state.showSchoolTable = false;
+				console.log("show student Table");
 			} else {
-				state.showStudentForm = false;
-				state.showSchoolForm = false;
+				state.showStudentTable = false;
+				state.showSchoolTable = false;
+				console.log("no Table");
 			}
 		},
 		postSchoolData(state, payload) {
@@ -99,8 +104,10 @@ export const store = new Vuex.Store({
 		getSchoolData(state) {
 			return state.schoolData;
 		},
-		getFormStatus(state) {
-			return [state.showSchoolForm, state.showStudentForm];
+		getTableStatus(state) {
+			console.log("in getTableStatus");
+
+			return [state.showSchoolTable, state.showStudentTable];
 		},
 		showEnrolledStudent: (state) => (school) => {
 			console.log(
