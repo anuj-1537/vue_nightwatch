@@ -10,21 +10,23 @@ export const store = new Vuex.Store({
 		studentData: [
 			{
 				name: "anuj deep",
-				age: 23,
+
 				gender: "male",
 				qualification: "B.Tech",
 				contact: 7004011477,
 				dob: "1998-12-31",
 				school: "JNV",
+				age: 23,
 			},
 			{
 				name: "tom hardy",
-				age: 34,
+
 				gender: "male",
 				qualification: "B.Sc",
 				contact: 8989831733,
 				dob: "1995-06-26",
 				school: "DAV",
+				age: 26,
 			},
 		],
 		selectedStudentData: {},
@@ -42,6 +44,7 @@ export const store = new Vuex.Store({
 		],
 		showSchoolTable: false,
 		showStudentTable: false,
+		today: new Date(),
 	},
 	mutations: {
 		postStudentData(state, payload) {

@@ -66,6 +66,7 @@
 </template>
 
 <script>
+import ageFunction from '../utility';
 export default {
   data() {
     return {
@@ -229,19 +230,8 @@ export default {
 
   computed: {
     age() {
-      if (this.dob !== "" || typeof this.dob !== "undefined") {
-        let today = new Date();
-        let birthDate = new Date(this.dob);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        let m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-          age--;
-        }
-        console.log(age);
-
-        return age;
-      }
-      return 0;
+      return ageFunction.getAge(this.dob);
+      
     },
     selectedStudent() {
       return this.$store.getters.getStudentData[this.$store.getters.getSelectedIndex]
