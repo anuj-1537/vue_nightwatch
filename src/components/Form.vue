@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2>Student Details</h2>
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" v-model="name" />
     <br />
@@ -49,6 +50,17 @@
           <li v-for="(err,index) in contactErr" :key="index">{{err}}</li>
       </ul>
     </p>
+    <label for="school">School Name:</label>
+    <select id="school" v-model="school">
+      <option v-for="(school,index) in schoolData" :key="index" :value="school.schoolName" >
+        {{school.schoolName}}</option>
+    </select>
+    <br />
+    <p v-if="schoolErr.length!=0">
+      <ul>
+          <li v-for="(err,index) in schoolErr" :key="index">{{err}}</li>
+      </ul>
+    </p>
     <button type="submit" @click.prevent="submitForm()">Submit</button>
   </div>
 </template>
@@ -62,6 +74,7 @@ export default {
       dob: "",
       qualification: "",
       contact: 0,
+      school:"",
       studentList: [],
       formValidate: false,
       studentObj: {},
@@ -70,7 +83,8 @@ export default {
       genderErr: [],
       dobErr: [],
       qualificationErr: [],
-      contactErr: []
+      contactErr: [],
+      schoolErr: [],
     };
   },
   
@@ -85,6 +99,7 @@ export default {
         qualification: this.qualification,
         contact: parseInt(this.contact),
         dob: this.dob,
+        school:this.school,
       };
       this.validateForm();
       if (this.formValidate) {
@@ -115,7 +130,9 @@ export default {
         (this.age = 0),
         (this.qualification = ""),
         (this.contact = 0);
+        this.school="";
       this.formValidate = false;
+      this.schoolData=[];
       this.studentObj = {};
       this.dob = "";
       this.nameErr = [];
@@ -123,6 +140,7 @@ export default {
       this.contactErr = [];
       this.qualificationErr = [];
       this.dobErr = [];
+      this.schoolErr=[];
     },
     
     checkNameError() {
@@ -172,6 +190,14 @@ export default {
         
       }
     },
+    checkSchoolError() {
+      if (
+        this.school == "" ||
+        typeof this.school === "undefined"
+      ) {
+        this.schoolErr.push("school is not selected");
+      }
+    },
     validateForm() {
       
       this.genderErr=[];
@@ -179,18 +205,20 @@ export default {
       this.qualificationErr = [];
       this.nameErr=[];
       this.dobErr=[];
+      this.schoolErr=[];
       this.checkNameError();
       this.checkGenderError();
       this.checkAgeError();
       this.checkQualificationError();
       this.checkContactError();
+      this.checkSchoolError();
       console.log("name error ", this.nameErr);
       console.log("gender error ", this.genderErr);
       console.log("dob error ", this.dobErr);
       console.log("qualification error ", this.qualificationErr);
       console.log("contact error ", this.contactErr);
       if(this.genderErr.length==0 && this.contactErr.length==0 && this.nameErr.length==0
-      && this.dobErr.length==0 && this.qualificationErr.length==0){
+      && this.dobErr.length==0 && this.qualificationErr.length==0 && this.schoolErr.length==0){
         this.formValidate=true;
         console.log("form is validated successfully");
         
@@ -217,6 +245,9 @@ export default {
     },
     selectedStudent() {
       return this.$store.getters.getStudentData[this.$store.getters.getSelectedIndex]
+    },
+    schoolData(){
+      return this.$store.getters.getSchoolData;
     }
   },
   watch:{
@@ -227,6 +258,7 @@ export default {
       this.gender=this.selectedStudent.gender;
       this.contact=this.selectedStudent.contact;
       this.qualification=this.selectedStudent.qualification;
+      this.school=this.selectedStudent.school;
     }
   }
 };
@@ -245,9 +277,10 @@ button {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  border-radius: 4px;
 }
 input[type="text"],
-input[type="number"],
+input[type="number"],input[type="date"],
 select {
   width: 30%;
   padding: 6px 10px;
