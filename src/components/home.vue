@@ -1,7 +1,5 @@
 <template>
-	<div id="home">
-		<p>Welcome to School Data Management</p>
-	</div>
+	<p>Welcome to School Data Management</p>
 </template>
 <script>
 export default {};
