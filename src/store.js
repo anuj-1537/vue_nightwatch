@@ -17,6 +17,7 @@ export const store = new Vuex.Store({
 				dob: "1998-12-31",
 				school: "JNV",
 				age: 23,
+				imageUrl:"https://res.cloudinary.com/codermj/image/upload/v1632977894/flwai3lwa4lmki25kigx.jpg"
 			},
 			{
 				name: "tom hardy",
@@ -27,6 +28,7 @@ export const store = new Vuex.Store({
 				dob: "1995-06-26",
 				school: "DAV",
 				age: 26,
+				imageUrl:"https://res.cloudinary.com/codermj/image/upload/v1632977672/ucykmsnmegkwhyddxoz8.png"
 			},
 		],
 		selectedStudentData: {},
@@ -49,12 +51,11 @@ export const store = new Vuex.Store({
 	},
 	mutations: {
 		postStudentData(state, payload) {
-			console.log("in mutations");
+			
 
 			state.studentData.push(payload);
 		},
 		changeSelectedIndex(state, payload) {
-			console.log("index is changed to ", payload);
 
 			state.selectedIndex = payload;
 		},
@@ -71,7 +72,6 @@ export const store = new Vuex.Store({
 			state.schoolData.splice(state.selectedSchoolIndex, 1, payload);
 		},
 		showTable(state, payload) {
-			console.log("in showTable");
 
 			if (payload[0]) {
 				state.showSchoolTable = true;
@@ -88,13 +88,11 @@ export const store = new Vuex.Store({
 			}
 		},
 		postSchoolData(state, payload) {
-			console.log("in mutations");
 
 			state.schoolData.push(payload);
 		},
 		changeSelectedSchoolIndex(state, payload) {
-			console.log("index is changed to ", payload);
-
+			
 			state.selectedSchoolIndex = payload;
 		},
 		SET_ITEMS(state, cards) {
@@ -112,15 +110,11 @@ export const store = new Vuex.Store({
 			return state.schoolData;
 		},
 		getTableStatus(state) {
-			console.log("in getTableStatus");
 
 			return [state.showSchoolTable, state.showStudentTable];
 		},
 		showEnrolledStudent: (state) => (school) => {
-			console.log(
-				state.studentData.filter((student) => student.school == school),
-			);
-
+			
 			return state.studentData.filter(
 				(student) => student.school == school,
 			);
@@ -140,7 +134,6 @@ export const store = new Vuex.Store({
 					"https://random-data-api.com/api/business_credit_card/random_card?size=" +
 						num,
 				);
-				console.log(response.data);
 				//calling mutations in actions
 				commit("SET_ITEMS", response.data);
 			} catch (error) {

@@ -1,6 +1,7 @@
 <template>
 	<div>
     <h2>School Details</h2>
+    <form>
 		<label for="schoolName">School Name:</label>
     <input type="text" id="schoolName" name="schoolName" v-model="schoolName" />
     <br />
@@ -31,11 +32,13 @@
           <li v-for="(err,index) in addrErr" :key="index">{{err}}</li>
       </ul>
     </p>
-    <button type="submit" @click.prevent="submitSchoolForm()">Submit</button>
+    <button type="submit" @click.prevent="submitSchoolForm()" id="schoolBtn">Submit</button>
+    </form>
 	</div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
 	name: "School",
 	data() {
@@ -95,12 +98,10 @@ export default {
       this.checkNameError();
       this.checkIdError();
       this.checkAddressError();
-      console.log("name error ", this.schNameErr);
-      console.log("id error ", this.IdErr);
-      console.log("address error ", this.addrErr);
+      
       if(this.schNameErr.length==0 && this.IdErr.length==0 && this.addrErr.length==0){
         this.formValidate=true;
-        console.log("form is validated successfully");
+        
         
       }
     
@@ -136,7 +137,7 @@ export default {
     selectedSchool(){
       if(typeof this.selectedSchool !="undefined"){
         this.schoolName=this.selectedSchool.schoolName;
-      console.log(this.selectedSchool.schoolName);
+      
       this.schoolId=this.selectedSchool.schoolId;
       this.Addr=this.selectedSchool.Addr;
       }
@@ -144,8 +145,13 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'getSelectedSchoolIndex',
+      'getSchoolData'
+    ]),
     selectedSchool() {
-      return this.$store.getters.getSchoolData[this.$store.getters.getSelectedSchoolIndex]
+      return this.getSchoolData[this.getSelectedSchoolIndex]
+      // return this.$store.getters.getSchoolData[this.$store.getters.getSelectedSchoolIndex]
     },
   }
 }

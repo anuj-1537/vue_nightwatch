@@ -7,10 +7,13 @@ function getAge(dob) {
 		if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
 			age--;
 		}
-		console.log(age);
+		
 
 		return age;
 	}
 	return 0;
 }
-module.exports = { getAge };
+let baseApiUrl = "https://api.cloudinary.com/v1_1/codermj/upload";
+let CLOUDINARY_UPLOAD_PRESET = "n8hb45ip";
+let letters = /^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/;
+module.exports = { getAge ,baseApiUrl,CLOUDINARY_UPLOAD_PRESET,letters};

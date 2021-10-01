@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div v-if="showStudentTable">
-			<table>
+			<table id="studentTable">
 				<tr>
 					<th>SI No.</th>
 					<th>Name</th>
@@ -10,6 +10,7 @@
 					<th>Qualification</th>
 					<th>Contact No.</th>
 					<th>School</th>
+					<th>Image</th>
 					<th>Operation</th>
 				</tr>
 				<tr v-for="(student, index) in studentInfo" :key="index">
@@ -20,14 +21,15 @@
 					<td>{{ student.qualification }}</td>
 					<td>{{ student.contact }}</td>
 					<td>{{ student.school }}</td>
+					<td ><img :src="student.imageUrl" alt="img" id="pic"></td>
 					<td>
-						<button @click="changeStudentData(index)">Edit</button>
+						<button @click="changeStudentData(index)" :id="'edit-'+index">Edit</button>
 					</td>
 				</tr>
 			</table>
 		</div>
 		<div v-if="showSchoolTable">
-			<table>
+			<table id="schoolTable">
 				<tr>
 					<th>SI No.</th>
 					<th>School Name</th>
@@ -42,10 +44,10 @@
 					<td>{{ school.schoolId }}</td>
 					<td>{{ school.Addr }}</td>
 					<td>
-						<button @click="changeSchoolData(index)">Edit</button>
+						<button @click="changeSchoolData(index)" :id="'edits'+index">Edit</button>
 					</td>
 					<td>
-						<button @click="showSchoolInfo(school.schoolName)">
+						<button @click="showSchoolInfo(school.schoolName)" :id="index">
 							Show Info
 						</button>
 					</td>
@@ -64,6 +66,7 @@
 						<th>Qualification</th>
 						<th>Contact No.</th>
 						<th>School</th>
+						<th>Image</th>
 					</tr>
 					<tr
 						v-for="(student, index) in studentsEnrolled"
@@ -76,6 +79,7 @@
 						<td>{{ student.qualification }}</td>
 						<td>{{ student.contact }}</td>
 						<td>{{ student.school }}</td>
+						<td ><img :src="student.imageUrl" alt="img" id="pic"></td>
 					</tr>
 				</table>
 			</div>
@@ -84,6 +88,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
 	data() {
 		return {
@@ -91,31 +96,35 @@ export default {
 		};
 	},
 	computed: {
+		...mapGetters([
+      'getSelectedSchoolIndex',
+      'getSchoolData','getStudentData','getTableStatus'
+
+    ]),
 		studentInfo() {
-			console.log("in computed properties");
+			
 			return this.studentList;
 		},
 		studentList() {
-			console.log(this.$store.getters.getStudentData);
-
-			return this.$store.getters.getStudentData;
+			return this.getStudentData;
+			// return this.$store.getters.getStudentData;
 		},
 		showSchoolTable() {
-			console.log("in table.vue show school table");
-
-			return this.$store.getters.getTableStatus[0];
+			return this.getTableStatus[0];
+			// return this.$store.getters.getTableStatus[0];
 		},
 		showStudentTable() {
-			console.log("in table.vue show student table");
-			return this.$store.getters.getTableStatus[1];
+			return this.getTableStatus[1];
+			// return this.$store.getters.getTableStatus[1];
 		},
 		schoolList() {
-			return this.$store.getters.getSchoolData;
+			return this.getSchoolData;
+			// return this.$store.getters.getSchoolData;
 		},
 	},
 	methods: {
 		changeStudentData(index) {
-			console.log("edit button is clicked ", index);
+			
 
 			this.$store.commit("changeSelectedIndex", index);
 		},
@@ -123,10 +132,8 @@ export default {
 			this.studentsEnrolled = this.$store.getters.showEnrolledStudent(
 				schoolName,
 			);
-			// console.log(this.$store.getters.showEnrolledStudent(schoolName));
 		},
 		changeSchoolData(index) {
-			console.log("in changeSchoolData ", index);
 			this.$store.commit("changeSelectedSchoolIndex", index);
 		},
 	},
@@ -144,5 +151,9 @@ table {
 	width: 100%;
 	margin-top: 30px;
 	border-collapse: collapse;
+}
+#pic{
+	width: 70px;
+	height: 70px;
 }
 </style>

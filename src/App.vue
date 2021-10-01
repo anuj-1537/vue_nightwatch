@@ -6,17 +6,17 @@
 			</button>
 		</router-link>
 		<router-link to="/school">
-			<button class="form-btn" @click="chooseTable(true, false)">
+			<button class="form-btn" id="schoolFormButton" @click="chooseTable(true, false)">
 				School Form
 			</button>
 		</router-link>
 		<router-link to="/student">
-			<button class="form-btn" @click="chooseTable(false, true)">
+			<button class="form-btn" id="studentFormButton" @click="chooseTable(false, true)">
 				Student Form
 			</button>
 		</router-link>
 		<router-link to="/cardData">
-			<button class="form-btn" @click="chooseTable(false, false)">
+			<button class="form-btn" @click="chooseTable(false, false)" id="creditButton">
 				Credit Card
 			</button>
 		</router-link>
@@ -45,20 +45,20 @@ export default {
 		Table,
 		// School,
 	},
-	computed: {
-		studentData() {
-			return this.$store.getters.getStudentData;
-		},
-		selectedIndex() {
-			return this.$store.getters.getSelectedIndex;
-		},
-		showSchoolForm() {
-			return this.$store.getters.getFormStatus[0];
-		},
-		showStudentForm() {
-			return this.$store.getters.getFormStatus[1];
-		},
-	},
+	// computed: {
+	// 	studentData() {
+	// 		return this.$store.getters.getStudentData;
+	// 	},
+	// 	selectedIndex() {
+	// 		return this.$store.getters.getSelectedIndex;
+	// 	},
+	// 	showSchoolForm() {
+	// 		return this.$store.getters.getFormStatus[0];
+	// 	},
+	// 	showStudentForm() {
+	// 		return this.$store.getters.getFormStatus[1];
+	// 	},
+	// },
 };
 </script>
 

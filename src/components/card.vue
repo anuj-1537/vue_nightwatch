@@ -2,7 +2,7 @@
 	<div>
 		<h3>Credit Card Details</h3>
 		<ol>
-			<li v-for="(card, index) in cards" :key="index">
+			<li v-for="(card, index) in cards" :key="index" class="card-list">
 				<b-card
 					:title="card.id"
 					id="card"
@@ -21,10 +21,15 @@
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
 	computed: {
+		...mapGetters([
+			'getCards',
+			]),
 		cards() {
-			return this.$store.getters.getCards;
+			return this.getCards;
+			// return this.$store.getters.getCards;
 		},
 	},
 	created() {
