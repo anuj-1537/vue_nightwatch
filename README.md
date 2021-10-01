@@ -15,10 +15,21 @@ npm run serve
 npm run build
 ```
 
+### adding nightwatch to existing vue project
+```
+vue add e2e-nightwatch
+```
+
+### to run the nightwatch
+```
+npm run test:e2e
+```
+
 ### Lints and fixes files
 ```
 npm run lint
 ```
+
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
